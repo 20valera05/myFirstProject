@@ -170,7 +170,7 @@ function openModalWindow(removeParentDiv) {
         modalBackground.classList.add("hidden");
         allEmptyDiv();
         updateDivAll();
-       
+
     })
     cancelButton.addEventListener("click", function () {
         modalWindow.classList.add("hidden");
@@ -217,6 +217,38 @@ document.addEventListener("click", function (event) {
     if (button && button.closest(".flex.items-center.my-5")) {
         let removeParentDiv = event.target.closest("div.flex.items-center.my-5");
         openModalWindow(removeParentDiv);
+    } 
+});
+
+
+
+
+taskContainerTop.addEventListener("click", function(event) {
+    if (event.target.tagName === "SPAN") {
+        let span = event.target;
+        let textArea = span.textContent;
+        let input = document.createElement("input");
+        input.value = textArea;
+        input.classList.add("border", "bg-gray-200", "border-gray-300", "rounded","text-lg", "w-[99%]", "mr-2", "ml-6");
+        span.replaceWith(input);
+        input.focus(); 
+       
+        input.addEventListener("blur", function() {
+            textArea = input.value;
+            span.innerHTML = textArea; 
+            input.replaceWith(span);
+            saveDivToLocalStorage("taskContainerTop");
+        });
+
+        input.addEventListener("keydown", function(event) {
+            if (event.keyCode === 13) { 
+                textArea = input.value;
+                span.innerHTML = textArea; 
+                input.replaceWith(span);
+                saveDivToLocalStorage("taskContainerTop");
+            }
+        });
     }
 });
+
 
